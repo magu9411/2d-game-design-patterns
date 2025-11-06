@@ -1,0 +1,109 @@
+\documentclass[letterpaper]{article}
+\usepackage{aaai}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{lipsum}
+\frenchspacing
+\setlength{\pdfpagewidth}{8.5in}
+\setlength{\pdfpageheight}{11in}
+\pdfinfo{
+/Title (Object-Oriented Design Patterns in a Mini 2D Java Game Prototype)
+/Author (Manikandan Gunaseelan, Owen Flack)}
+\setcounter{secnumdepth}{0}
+\begin{document}
+
+\title{Object-Oriented Design Patterns in a Mini 2D Java Game Prototype}
+\author{Manikandan Gunaseelan, Owen Flack\\
+University of Colorado Boulder}
+\maketitle
+
+\begin{abstract}
+\begin{quote}
+The following outlines our research plan for implementing and evaluating our Object Oriented Design Project. We will analyze the role of object-oriented design patterns - State, Component, Observer and Factory in the context of small-scale game engines. We will also demonstrate the use of these patterns in a small 2-D Java game engine that we develop.
+\end{quote}
+\end{abstract}
+
+\section{Introduction}
+Object-Oriented design patterns have long provided reusable blueprints for structuring complex software systems. Game engines, in particular, rely heavily on these patterns to manage their objects - dynamic entities, their behaviors and interactions. This project will investigate how a combination of design patterns can be applied to a lightweight 2D Java game engine and how their use improves maintainability and extensibility. We will also compare the internal design of our engine with those of popular engines such as Unity and Godot to understand how industrial practices scale to smaller educational projects.
+
+\section{Background and Related Work}
+We will review previous studies and developer websites analyzing design patterns in established engines such as Godot, Unity and Unreal Engine. Drawing on this literature, we will identify the patterns that contribute most to engine flexibility and developer productivity.
+
+\section{Research Focus}
+We will explore the following research points in detail -
+\begin{itemize}
+    \item \textbf{Component-based Architecture for modern game engines:} Prior research (Bezditnyi and Chebanyuk 2024) advocates a methodology for designing flexible, component-based architectures for game engines like Unity, Unreal Engine and Godot to improve scalability and system clarity. It provides both a theoretical grounding and practical implementations that we can parallel in our prototype.
+    \item \textbf{OO Patterns and performance improvements in game development:} Going through the work of Yunato et al. (2023) which proposed a Unity UI framework incorporating packages using the Builder, Decorator and Observer pattern to measure performance improvement in terms of development time and user satisfaction.
+    \item \textbf{Reducing coupling and code duplication using the Rulebook Architectural Pattern:} This pattern (Rulebook, 2023) is used to manage dynamic, rule-changing systems in games (like invincibility in Mario or rule-changing cards in Magic). The proposed Rulebook pattern solves the issues caused by them by encapsulating those mechanics in modular "rule" objects.
+    \item \textbf{Design Patterns used in Godot:} Godot developer blogs (GDQuest, 2023) explores the use of several design patterns in the engine - Observer, Singleton etc. This article warns against the overuse of some patterns and some of the negative effects they may have, such as increasing complexity and maintenance costs. This can help us with one of our evaluation metrics for our own engine - Maintainability.
+    \item \textbf{Entity-Component Based vs Node-based OO approach in Game engines:} Another Godot blog (Linietsky, 2021) explains why the engine does not use an ECS architecture, which is fairly common in modern game engines. Godot employs a Node-based approach which provides greater flexibility and a more intuitive workflow for developers.
+    
+\end{itemize}
+
+\section{System Design}
+\subsection{Architecture Overview}
+Our proposed 2D Java engine will include an \textit{Entity Manager}, \textit{Renderer}, and \textit{Game Loop}. We will apply the following OO design patterns:
+\begin{itemize}
+    \item \textbf{Factory Pattern:} For dynamic creation of entities such as Player, Enemy, and Projectile.
+    \item \textbf{Observer Pattern:} For event-driven communication between input, physics, and rendering modules.
+    \item \textbf{Component Pattern:} To enable flexible entity composition (e.g., PhysicsComponent, RenderComponent, InputComponent).
+    \item \textbf{State Pattern:} To manage player and enemy behavior (Idle, Move, Attack, Dead states).
+\end{itemize}
+
+\subsection{Implementation Plan}
+We plan to develop the engine in Java using object-oriented principles and modular packages. UML diagrams will accompany each design pattern to demonstrate relationships between classes. The source code, along with a runnable prototype and documentation in the README, will be hosted on GitHub.
+
+\section{Evaluation Metrics}
+To measure success, we will evaluate our system according to the following criteria. These will also ensure that we are following widely accepted OO principles like SOLID, Don't Repeat Yourself (DRY) and Keep it Simple Stupid (KISS):
+\begin{itemize}
+    \item \textbf{Maintainability:} Ease of adding or modifying game entities, measured by the number of classes affected per feature change.
+    \item \textbf{Flexibility:} Ability to add new mechanics or features without significant code refactoring.
+    \item \textbf{Code Reuse:} Number of shared components across entity types.
+    \item \textbf{Pattern Effectiveness:} Qualitative analysis comparing readability and modularity versus a non-pattern baseline.
+\end{itemize}
+
+\section{Expected Results}
+We expect that applying multiple OO design patterns will reduce code duplication and improve maintainability at minimal performance cost. The project deliverables will include:
+\begin{itemize}
+    \item A runnable Java-based 2D game demo.
+    \item UML diagrams that illustrate the integration of all four patterns.
+    \item Annotated source code and documentation.
+    \item A final paper analyzing design trade-offs and lessons learned.
+\end{itemize}
+
+\section{References}
+\begin{small}
+\noindent
+Bezditnyi, V., \& Chebanyuk, O. (2024). \\
+\textit{Software Engineering Fundamentals to Design Application for Modern Game Engines.} \\
+In \textit{Proceedings of the 14th International Scientific and Practical Conference on Programming UkrPROG'2024}, \\
+Kyiv, Ukraine. CEUR Workshop Proceedings, Vol. 3806. \\
+Available at \url{https://ceur-ws.org/Vol-3806/S_46_Bezditnyi_Chebanyuk.pdf}.
+
+\noindent
+Yunanto, A. A., Jamal, S., Sa'adah, U., Aziz, A. S., Permatasari, D. I., Nailussa'ada, N., \& Hardiansyah, F. F. (2023). \\
+\textit{Implementation of Design Patterns on Unity Components to Increase Reusability and Game Speed Development.} \\
+In \textit{Proceedings of the 2023 International Conference on Informatics, Multimedia, Cyber and Information System (ICIMCIS)}, \\
+pp. 366--373. IEEE.
+
+\noindent
+Mizutani, W. K., \& Kon, F. (2023).
+\textit{Rulebook: An Architectural Pattern for Self-Amending Mechanics in Digital Games.} \\
+In \textit{Proceedings of the 2023 Brazilian Symposium on Games and Digital Entertainment (SBGames)}, \\
+pp. 1--10. SBC OpenLib. 
+
+\noindent
+GDQuest. (2023). \\
+\textit{Intro to Design Patterns in Godot.} \\
+Retrieved from \url{https://www.gdquest.com/tutorial/godot/design-patterns/intro-to-design-patterns/}.
+
+\noindent
+Linietsky, J. (2021). \\
+\textit{Why Isn't Godot an ECS-Based Game Engine?} \\
+Godot Engine Official Blog. \\
+Retrieved from \url{https://godotengine.org/article/why-isnt-godot-ecs-based-game-engine/}.
+
+\end{small}
+
+\end{document}
