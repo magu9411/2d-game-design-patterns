@@ -9,7 +9,7 @@ Mini Java 2D game prototype that demonstrates how the Factory, Component, Observ
 - **Factory-built world:** `EntityFactory` bundles the right components per entity type and seeds the playable demo (player + two patrolling enemies).
 
 ## Running the demo
-The project has no external dependencies beyond a JDK (tested with Java 17).
+The project has no external dependencies beyond a JDK (tested with openjdk 24.0.2).
 
 ```bash
 # compile everything
