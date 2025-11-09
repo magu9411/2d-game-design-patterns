@@ -35,7 +35,6 @@ src/main/java/com/ooad/gameengine/
 ├── events/      -> Observer pattern primitives (EventBus + events)
 ├── factory/     -> EntityFactory for player/enemy creation
 └── state/       -> Player state hierarchy (Idle, Moving, Attacking)
-docs/outline.tex -> LaTeX outline that ties research goals to the implementation
 ```
 
 ## Adapting/Extending
