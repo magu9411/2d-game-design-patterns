@@ -1,6 +1,6 @@
 # 2d-game-design-patterns
 
-Mini Java 2D game prototype that demonstrates how the Factory, Component, Observer, and State patterns interact inside a small teaching engine. The code is intentionally compact so that each pattern can be traced from UML-level discussions into concrete Java classes (see `docs/outline.tex` for the accompanying paper outline).
+Mini Java 2D game prototype that demonstrates how the Factory, Component, Observer, and State patterns interact inside a small teaching engine. The code is intentionally compact so that each pattern can be traced from UML-level discussions into concrete Java classes
 
 ## Features
 - **Component-based entities:** `Entity` composes behavior at runtime from input, rendering, AI, and player-state components.
