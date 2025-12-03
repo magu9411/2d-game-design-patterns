@@ -5,10 +5,7 @@ import com.ooad.gameengine.events.EventType;
 import com.ooad.gameengine.events.GameEvent;
 import com.ooad.gameengine.events.InputEvent;
 import com.ooad.gameengine.events.StateChangeEvent;
-import com.ooad.gameengine.state.AttackingState;
-import com.ooad.gameengine.state.IdleState;
-import com.ooad.gameengine.state.MovingState;
-import com.ooad.gameengine.state.PlayerState;
+import com.ooad.gameengine.state.*;
 
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
@@ -21,7 +18,9 @@ public class PlayerStateComponent extends Component {
     private final PlayerState idleState = new IdleState();
     private final PlayerState movingState = new MovingState();
     private final PlayerState attackingState = new AttackingState();
+    private final PlayerState damagedState = new DamagedState();
     private PlayerState current = idleState;
+
     private final Set<Integer> activeMovementKeys = new HashSet<>();
     private double attackTimer;
     private boolean stateAnnounced;
@@ -87,6 +86,8 @@ public class PlayerStateComponent extends Component {
     public PlayerState attackingState() {
         return attackingState;
     }
+
+    public PlayerState damagedState() {return damagedState;}
 
     private boolean isMovementKey(int keyCode) {
         return keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT ||

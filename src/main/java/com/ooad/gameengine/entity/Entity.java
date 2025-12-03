@@ -12,6 +12,7 @@ import java.util.UUID;
  * Aggregates components (Component pattern) and routes lifecycle callbacks.
  */
 public class Entity {
+    private static final double DEFAULT_PLAYER_HEALTH = 10.0;
     private final UUID id = UUID.randomUUID();
     private final String label;
     private final Vector2D position;
@@ -19,6 +20,7 @@ public class Entity {
     private final Vector2D size;
     private final List<Component> components = new ArrayList<>();
     private boolean alive = true;
+    private double health = DEFAULT_PLAYER_HEALTH;
     private int worldWidth;
     private int worldHeight;
     private EventBus eventBus;
@@ -48,6 +50,10 @@ public class Entity {
 
     public Vector2D getSize() {
         return size;
+    }
+
+    public double getHealth() {
+        return health;
     }
 
     public void addComponent(Component component) {
