@@ -1,5 +1,7 @@
 package com.ooad.gameengine.core;
 
+import com.ooad.gameengine.components.IPlayerStateProvider;
+import com.ooad.gameengine.components.PlayerStateComponent;
 import com.ooad.gameengine.entity.Entity;
 import com.ooad.gameengine.events.EventBus;
 
@@ -35,11 +37,55 @@ public class World {
             keepInsideBounds(entity);
         }
 
+        checkCollisions();
+
         Iterator<Entity> iterator = entities.iterator();
         while (iterator.hasNext()) {
             if (!iterator.next().isAlive()) {
                 iterator.remove();
             }
+        }
+    }
+
+    private void checkCollisions() {
+        Entity player = entities.stream()
+                .filter(e -> "Player".equals(e.getLabel()))
+                .findFirst()
+                .orElse(null);
+
+        if (player == null) {
+            return;
+        }
+
+        for (Entity entity : entities) {
+            if (!entity.getLabel().startsWith("Enemy")) {
+                continue;
+            }
+            if (player.collidesWith(entity) && !isPlayerAttacking(player) && !playerTookDamageRecently(player)) {
+                IPlayerStateProvider playerStateProvider = player.getStateProvider();
+                if(playerStateProvider instanceof PlayerStateComponent playerStateComponent) {
+                    playerStateComponent.setState(playerStateComponent.damagedState());
+                    resetPlayerInvulnerability(player);
+                }
+
+            }
+        }
+    }
+
+    private boolean playerTookDamageRecently(Entity player) {
+        var stateProvider = player.getStateProvider();
+        return stateProvider != null && stateProvider.tookDamageRecently();
+    }
+
+    private boolean isPlayerAttacking(Entity player) {
+        var stateProvider = player.getStateProvider();
+        return stateProvider != null && stateProvider.isAttacking();
+    }
+
+    private void resetPlayerInvulnerability(Entity player) {
+        var stateProvider = player.getStateProvider();
+        if (stateProvider instanceof com.ooad.gameengine.components.PlayerStateComponent psc) {
+            psc.resetInvulnerabilityTimer();
         }
     }
 

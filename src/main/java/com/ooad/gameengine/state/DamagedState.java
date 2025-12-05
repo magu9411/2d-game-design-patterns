@@ -12,7 +12,7 @@ public class DamagedState implements PlayerState {
 
     @Override
     public void enter(PlayerStateComponent context, Entity entity) {
-
+        entity.takeDamage(1.0);
     }
 
     @Override
@@ -22,6 +22,10 @@ public class DamagedState implements PlayerState {
 
     @Override
     public void update(PlayerStateComponent context, Entity entity, double deltaSeconds) {
-
+        if (context.hasMovementInput()) {
+            context.setState(context.movingState());
+        } else {
+            context.setState(context.idleState());
+        }
     }
 }

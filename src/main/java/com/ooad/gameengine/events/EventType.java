@@ -6,5 +6,6 @@ package com.ooad.gameengine.events;
 public enum EventType {
     INPUT,
     STATE_CHANGE,
+    ENTITY_COLLISION,
     ENTITY_DESTROYED
 }

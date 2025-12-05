@@ -1,6 +1,7 @@
 package com.ooad.gameengine.entity;
 
 import com.ooad.gameengine.components.Component;
+import com.ooad.gameengine.components.IPlayerStateProvider;
 import com.ooad.gameengine.events.EventBus;
 
 import java.awt.Graphics2D;
@@ -56,6 +57,26 @@ public class Entity {
         return health;
     }
 
+    public void takeDamage(double amount) {
+        health -= amount;
+        if (health <= 0) {
+            destroy();
+        }
+    }
+
+    public List<Component> getComponents() {
+        return components;
+    }
+
+    public IPlayerStateProvider getStateProvider() {
+        for (Component component : components) {
+            if (component instanceof IPlayerStateProvider) {
+                return (IPlayerStateProvider) component;
+            }
+        }
+        return null;
+    }
+
     public void addComponent(Component component) {
         component.setOwner(this);
         components.add(component);
@@ -102,6 +123,20 @@ public class Entity {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public boolean collidesWith(Entity other) {
+        double x1 = position.getX();
+        double y1 = position.getY();
+        double w1 = size.getX();
+        double h1 = size.getY();
+
+        double x2 = other.position.getX();
+        double y2 = other.position.getY();
+        double w2 = other.size.getX();
+        double h2 = other.size.getY();
+
+        return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2;
     }
 
     public void destroy() {

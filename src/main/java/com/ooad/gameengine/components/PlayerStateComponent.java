@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * Implements a concrete State pattern for the player.
  */
-public class PlayerStateComponent extends Component {
+public class PlayerStateComponent extends Component implements IPlayerStateProvider {
     private final PlayerState idleState = new IdleState();
     private final PlayerState movingState = new MovingState();
     private final PlayerState attackingState = new AttackingState();
@@ -23,7 +23,10 @@ public class PlayerStateComponent extends Component {
 
     private final Set<Integer> activeMovementKeys = new HashSet<>();
     private double attackTimer;
+    private double damageInvulnerabilityTimer = 0;
+    private static final double INVULNERABILITY_DURATION = 0.5;
     private boolean stateAnnounced;
+    private boolean inContactWithAnotherEntity = false;
 
     @Override
     public void onAdded(Entity entity) {
@@ -36,6 +39,7 @@ public class PlayerStateComponent extends Component {
             publish(new StateChangeEvent(getOwner().getLabel(), current.name()));
             stateAnnounced = true;
         }
+        damageInvulnerabilityTimer -= deltaSeconds;
         current.update(this, entity, deltaSeconds);
     }
 
@@ -43,6 +47,8 @@ public class PlayerStateComponent extends Component {
     public void onEvent(GameEvent event) {
         if (event.type() == EventType.INPUT && event instanceof InputEvent inputEvent) {
             current.handleInput(this, getOwner(), inputEvent);
+        } else if (event.type() == EventType.ENTITY_COLLISION) {
+
         }
     }
 
@@ -106,5 +112,19 @@ public class PlayerStateComponent extends Component {
 
     public boolean isAttackFinished() {
         return attackTimer <= 0;
+    }
+
+    @Override
+    public boolean isAttacking() {
+        return "Attacking".equals(current.name());
+    }
+
+    @Override
+    public boolean tookDamageRecently() {
+        return damageInvulnerabilityTimer > 0;
+    }
+
+    public void resetInvulnerabilityTimer() {
+        damageInvulnerabilityTimer = INVULNERABILITY_DURATION;
     }
 }
