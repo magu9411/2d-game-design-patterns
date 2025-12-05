@@ -1,6 +1,6 @@
 # 2d-game-design-patterns
 
-Mini Java 2D game prototype that demonstrates how the Factory, Component, Observer, and State patterns interact inside a small teaching engine. The code is intentionally compact so that each pattern can be traced from UML-level discussions into concrete Java classes (see `docs/outline.tex` for the accompanying paper outline).
+Mini Java 2D game prototype that demonstrates how the Factory, Component, Observer, and State patterns interact inside a small teaching engine. The code is intentionally compact so that each pattern can be traced from UML-level discussions into concrete Java classes
 
 ## Features
 - **Component-based entities:** `Entity` composes behavior at runtime from input, rendering, AI, and player-state components.
@@ -9,7 +9,7 @@ Mini Java 2D game prototype that demonstrates how the Factory, Component, Observ
 - **Factory-built world:** `EntityFactory` bundles the right components per entity type and seeds the playable demo (player + two patrolling enemies).
 
 ## Running the demo
-The project has no external dependencies beyond a JDK (tested with Java 17).
+The project has no external dependencies beyond a JDK (tested with openjdk 24.0.2).
 
 ```bash
 # compile everything
@@ -35,7 +35,6 @@ src/main/java/com/ooad/gameengine/
 ├── events/      -> Observer pattern primitives (EventBus + events)
 ├── factory/     -> EntityFactory for player/enemy creation
 └── state/       -> Player state hierarchy (Idle, Moving, Attacking)
-docs/outline.tex -> LaTeX outline that ties research goals to the implementation
 ```
 
 ## Adapting/Extending
