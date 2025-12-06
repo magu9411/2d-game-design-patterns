@@ -28,6 +28,8 @@ public class EntityFactory {
         entities.add(createPlayer());
         entities.add(createEnemy("Enemy-A", worldWidth * 0.2, worldHeight * 0.3));
         entities.add(createEnemy("Enemy-B", worldWidth * 0.65, worldHeight * 0.55));
+        // Add a wall in the middle of the map
+        entities.add(createWall("Wall-1", worldWidth / 2 - 60, worldHeight / 2 - 30, 120, 60));
         return entities;
     }
 
@@ -46,5 +48,12 @@ public class EntityFactory {
         enemy.addComponent(new EnemyAIComponent(32, worldWidth - 32, 90));
         enemy.addComponent(new RectangleRenderComponent(new Color(0xFF6B6B), new Color(0x330000)));
         return enemy;
+    }
+    
+    public Entity createWall(String label, double x, double y, double width, double height) {
+        Entity wall = new Entity(label, new Vector2D(x, y), new Vector2D(width, height));
+        // Walls are static and don't need AI or movement components
+        wall.addComponent(new RectangleRenderComponent(new Color(0x6B6B6B), new Color(0x333333)));
+        return wall;
     }
 }

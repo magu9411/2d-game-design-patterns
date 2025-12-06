@@ -1,6 +1,7 @@
 package com.ooad.gameengine.components;
 
 import com.ooad.gameengine.entity.Entity;
+import com.ooad.gameengine.events.CollisionEvent;
 import com.ooad.gameengine.events.EventType;
 import com.ooad.gameengine.events.GameEvent;
 import com.ooad.gameengine.events.InputEvent;
@@ -47,8 +48,29 @@ public class PlayerStateComponent extends Component implements IPlayerStateProvi
     public void onEvent(GameEvent event) {
         if (event.type() == EventType.INPUT && event instanceof InputEvent inputEvent) {
             current.handleInput(this, getOwner(), inputEvent);
-        } else if (event.type() == EventType.ENTITY_COLLISION) {
+        } else if (event.type() == EventType.ENTITY_COLLISION && event instanceof CollisionEvent collisionEvent) {
+            handleCollision(collisionEvent);
+        }
+    }
 
+    private void handleCollision(CollisionEvent collision) {
+        Entity owner = getOwner();
+        if (!collision.involves(owner) || tookDamageRecently()) {
+            return;
+        }
+
+        if (collision.isWallCollision()) {
+            // Handle wall collision if needed
+            return;
+        }
+
+        if (collision.isEntityCollision()) {
+            // Check if the other entity is an enemy
+            Entity other = collision.getEntity1() == owner ? collision.getEntity2() : collision.getEntity1();
+            if (other.getLabel() != null && other.getLabel().startsWith("Enemy") && !isAttacking()) {
+                setState(damagedState());
+                resetInvulnerabilityTimer();
+            }
         }
     }
 
